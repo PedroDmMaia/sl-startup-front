@@ -31,7 +31,7 @@ type UpdateSchema = z.infer<typeof updateSchema>
 
 export default function EditEmployeeForm() {
   const { toast } = useToast()
-  const { employee, addToContext } = useEmployeeContext()
+  const { employee, addToContext, updateEmployee } = useEmployeeContext()
   const { isLoading, updateEmployeeData } = useUpdateEmployee(employee.id)
 
   const {
@@ -54,13 +54,13 @@ export default function EditEmployeeForm() {
     const result = await updateEmployeeData(data)
 
     if (result.success) {
-      // Adiciona os dados atualizados ao contexto
       addToContext({
         ...data,
         id: employee.id,
       })
 
-      // Exibe o toast de sucesso
+      updateEmployee(employee)
+
       toast({
         duration: 3000,
         variant: 'success',
